@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import Timeline from './components/Timeline';
 import Portfolio from './components/Portfolio';
+import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
@@ -98,27 +99,7 @@ const App: React.FC = () => {
           </RevealSection>
         </main>
         
-        {/* --- Footer Section --- */}
-        <footer id="footer" className="bg-design-black py-24 border-t-4 border-design-blue text-center text-white relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)',
-              backgroundSize: '32px 32px'
-          }}></div>
-          <div className="relative z-10 max-w-4xl mx-auto px-6">
-              <h2 className="text-7xl font-display font-bold mb-8 tracking-tighter uppercase text-white">Simpson</h2>
-              <div className="flex justify-center flex-wrap gap-8 md:gap-12 mb-16">
-                 <a href="mailto:kuzashikami@gmail.com" className="text-xs font-bold uppercase tracking-widest hover:text-design-blue transition-all relative group text-white">
-                   Email
-                 </a>
-                 <a href="#" className="text-xs font-bold uppercase tracking-widest hover:text-design-blue transition-all relative group text-white">
-                   Instagram
-                 </a>
-              </div>
-              <p className="text-gray-600 text-[10px] font-mono uppercase tracking-[0.3em]">
-                © {new Date().getFullYear()} Simpson Studio &bull; Built with Strength and Precision
-              </p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </ErrorBoundary>
   );
