@@ -22,7 +22,6 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ proj
 
   return (
     <motion.div 
-      layout
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -238,8 +237,8 @@ const Portfolio: React.FC = () => {
         </div>
 
         {/* --- Website Code: Project Grid --- */}
-        <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 2xl:columns-4 gap-6 w-full mx-auto px-2">
-          <AnimatePresence>
+        <div className="columns-1 sm:columns-2 lg:columns-3 2xl:columns-4 gap-6 w-full mx-auto px-2">
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <ProjectCard 
                 key={project.id} 
@@ -248,7 +247,7 @@ const Portfolio: React.FC = () => {
               />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
         
         {/* --- Website Code: Load More Button --- */}
         <div className="mt-32 flex justify-center">
