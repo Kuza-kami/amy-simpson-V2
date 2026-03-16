@@ -71,7 +71,6 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ proj
                                    url: window.location.href
                                }).catch(console.error);
                            } else {
-                               // Fallback or toast
                                console.log('Web Share API not supported');
                            }
                        }}
@@ -195,7 +194,6 @@ const Portfolio: React.FC = () => {
     }
   };
 
-  // --- Website Code: Project Details Memoization ---
   const details = useMemo(() => 
     selectedProject ? getProjectDetails(selectedProject) : { measurement: '', concept: '', media: '' },
     [selectedProject]
@@ -203,7 +201,6 @@ const Portfolio: React.FC = () => {
 
   const displaySize = currentProcessStep?.size || details.measurement || selectedProject?.size || 'Unknown';
   
-  // Parse dimensions for accurate rulers
   const sizeParts = displaySize.split(/[xX]/).map(s => s.trim());
   const unitMatch = displaySize.match(/[a-zA-Z]+$/);
   const unit = unitMatch ? unitMatch[0] : '';
@@ -222,7 +219,7 @@ const Portfolio: React.FC = () => {
     <section id="portfolio" className="py-20 md:py-32 bg-design-black relative text-white transition-colors duration-500">
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 relative">
         
-        {/* --- Website Code: Header Section --- */}
+        {/* --- Header Section --- */}
         <div className="flex flex-col xl:flex-row justify-between items-end mb-16 gap-8 px-2 border-b border-white/10 pb-12 sticky top-20 z-40 bg-design-black/90 backdrop-blur-sm py-4 transition-all duration-300">
             <div>
                <span className="block text-xs font-mono uppercase tracking-widest mb-4 text-design-green">
@@ -235,7 +232,7 @@ const Portfolio: React.FC = () => {
            <ProjectFilter activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         </div>
 
-        {/* --- Website Code: Project Grid --- */}
+        {/* --- Project Grid --- */}
         <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 2xl:columns-4 gap-6 w-full mx-auto px-2">
           <AnimatePresence>
             {filteredProjects.map((project) => (
@@ -248,7 +245,7 @@ const Portfolio: React.FC = () => {
           </AnimatePresence>
         </motion.div>
         
-        {/* --- Website Code: Load More Button --- */}
+        {/* --- Load More Button --- */}
         <div className="mt-32 flex justify-center">
             <ParallaxFloat offset={-20}>
               <button 
@@ -265,10 +262,11 @@ const Portfolio: React.FC = () => {
         </div>
       </div>
 
-      {/* --- Website Code: Project Modal --- */}
+      {/* --- Project Modal --- */}
       <AnimatePresence>
       {selectedProject && (
-        <div className="fixed inset-0 z-modal flex items-center justify-center p-0 md:p-8">
+        // FIX: z-[200] ensures the modal always renders above the sticky header's z-40
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-8">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -286,15 +284,16 @@ const Portfolio: React.FC = () => {
             transition={{ type: "spring", damping: 25, stiffness: 180, mass: 0.8 }}
             className="relative bg-[#f0f0f0] w-full max-w-[1400px] h-full md:h-[90vh] shadow-2xl flex flex-col overflow-hidden rounded-[16px] text-design-black"
           >
+            // FIX: z-[210] keeps the close button above the modal content itself
             <button 
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 md:top-6 md:right-6 z-modal-close w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-md text-design-black rounded-full hover:rotate-90 transition-transform duration-500 shadow-md focus:outline-none focus:ring-2 focus:ring-design-blue"
+              className="absolute top-4 right-4 md:top-6 md:right-6 z-[210] w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-md text-design-black rounded-full hover:rotate-90 transition-transform duration-500 shadow-md focus:outline-none focus:ring-2 focus:ring-design-blue"
             >
               <X size={20} className="w-5 h-5" />
             </button>
 
             <div className="flex flex-col lg:flex-row h-full overflow-hidden">
-              {/* --- Website Code: Modal Left Panel (Main Image) --- */}
+              {/* --- Modal Left Panel (Main Image) --- */}
               <motion.div 
                  initial={{ opacity: 0, x: -50 }}
                  animate={{ opacity: 1, x: 0 }}
@@ -326,7 +325,7 @@ const Portfolio: React.FC = () => {
                                         decoding="async"
                                     />
                                     
-                                    {/* --- Website Code: Dimensions Indicators --- */}
+                                    {/* --- Dimensions Indicators --- */}
                                     <div className="absolute -right-6 md:-right-10 top-4 bottom-4 flex flex-row items-center justify-center z-20 pointer-events-none hidden sm:flex">
                                         <div className="h-full flex flex-col items-center relative w-2 md:w-3">
                                           <div className="w-full h-[1px] bg-design-black/50"></div>
@@ -358,7 +357,7 @@ const Portfolio: React.FC = () => {
                   </div>
               </motion.div>
 
-              {/* --- Website Code: Modal Right Panel (Content) --- */}
+              {/* --- Modal Right Panel (Content) --- */}
               <motion.div 
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -380,7 +379,7 @@ const Portfolio: React.FC = () => {
                           {selectedProject.title}
                       </h2>
                       
-                      {/* --- Website Code: Project Description --- */}
+                      {/* --- Project Description --- */}
                       <div className="mb-10">
                           <p className="text-gray-800 font-medium text-sm md:text-base leading-relaxed mb-4">
                               {selectedProject.description}
@@ -393,7 +392,7 @@ const Portfolio: React.FC = () => {
                           )}
                       </div>
 
-                      {/* --- Website Code: Process Section --- */}
+                      {/* --- Process Section --- */}
                       {selectedProject.process && selectedProject.process.length > 0 && (
                           <div className="mb-12">
                               <div className="flex items-center gap-4 mb-8">
@@ -451,7 +450,7 @@ const Portfolio: React.FC = () => {
                                   </span>
                               </div>
 
-                              {/* --- Website Code: Carousel Dots --- */}
+                              {/* --- Carousel Dots --- */}
                               {projectImages.length > 1 && (
                                   <div className="flex justify-center gap-2">
                                       <div className="flex gap-2">
@@ -471,7 +470,7 @@ const Portfolio: React.FC = () => {
                       )}
                   </motion.div>
 
-                  {/* --- Website Code: Project Stats (Bottom) --- */}
+                  {/* --- Project Stats (Bottom) --- */}
                   <motion.div 
                      initial={{ opacity: 0, y: 20 }}
                      animate={{ opacity: 1, y: 0 }}
@@ -500,14 +499,15 @@ const Portfolio: React.FC = () => {
       )}
       </AnimatePresence>
 
-      {/* --- Website Code: High Res Image Viewer --- */}
+      {/* --- High Res Image Viewer --- */}
+      {/* FIX: z-[300] keeps the full-screen viewer above everything else */}
       <AnimatePresence>
         {viewHighRes && (
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-overlay bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+                className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
                 onClick={() => setViewHighRes(null)}
             >
                 <button 
